@@ -1,0 +1,8 @@
+---
+## Default variables for this role
+
+# What kind of update needs to be automatically installed
+update_type: security
+
+# Email address so send notifications to
+notification_email: root@localhost 

@@ -1,0 +1,4 @@
+---
+# Configure YUM if the system is Red Hat based
+- include_tasks: yum.yml
+  when: ansible_os_family == "RedHat"

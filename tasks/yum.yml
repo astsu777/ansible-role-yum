@@ -1,0 +1,28 @@
+---
+- name: (YUM) Setup EPEL repository
+  yum_repository:
+    name: epel
+    description: "Fedora EPEL (Extra Packages For Linux) Repository"
+    baseurl: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+    gpgkey: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+    file: "/etc/yum.repos.d/epel.repo"
+
+- name: (YUM) Update the YUM repositories & the system
+  yum:
+    update_cache: yes
+
+- name: (YUM) Install recommended packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - yum-cron
+
+- name: (YUM) Configure auto-upgrades
+  template:
+    src: yum-cron.conf
+    dest: /etc/yum/yum-cron.conf
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
